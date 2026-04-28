@@ -1,4 +1,4 @@
-DOTFILES_REPO ?= git@github.com:ClementCourcelle/dotfiles_tmp.git
+DOTFILES_REPO ?= git@github.com:ClementCourcelle/dotfiles.git
 DOTFILES_DIR  ?= $(HOME)/dotfiles
 SETUP_DIR     := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
@@ -31,3 +31,5 @@ dotfiles:
 
 gnome:
 	dconf load / < $(SETUP_DIR)gnome-settings.ini
+	sudo rm -rf /usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com
+

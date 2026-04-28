@@ -90,8 +90,13 @@ install_clangd() {
 }
 
 install_node() {
-  curl -fsSL "https://deb.nodesource.com/setup_${NODE_MAJOR}.x" | bash -
-  apt-get install -y nodejs
+  curl -fsSL https://deb.nodesource.com/setup_23.x -o /tmp/node_setup.sh
+  sh /tmp/node_setup.sh
+  apt install -y nodejs
+}
+
+install_stow() {
+  apt-get install -y stow
 }
 
 ensure     docker       install_docker
@@ -104,3 +109,4 @@ ensure     tmux         install_tmux
 ensure     nvim         install_nvim
 ensure_apt clangd       install_clangd
 ensure     node         install_node
+ensure_apt stow         install_stow

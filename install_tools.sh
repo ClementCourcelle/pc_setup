@@ -45,12 +45,22 @@ install_python_env() {
   apt-get install -y python3-venv python3-pip
 }
 
+install_rust() {
+  curl https://sh.rustup.rs -sSf | sh
+}
+
 install_kitty() {
   sudo -u "$REAL_USER" sh -c 'curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh'
   ln -sf "$REAL_HOME/.local/kitty.app/bin/kitty"  /usr/local/bin/kitty
   ln -sf "$REAL_HOME/.local/kitty.app/bin/kitten" /usr/local/bin/kitten
   update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/local/bin/kitty 100
 }
+
+install_alacritty() {
+  apt install cmake g++ pkg-config libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
+  cargo install alacritty
+}
+
 
 install_zsh() {
   apt-get install -y zsh
@@ -83,11 +93,11 @@ install_nvim() {
   tar -C /opt -xzf /tmp/nvim.tar.gz
   rm /tmp/nvim.tar.gz
   ln -sf /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim
+  cargo install tree-sitter-cli
 }
 
 install_clangd() {
-  apt-get install -y clangd tree-sitter-cli
-}
+  apt-get install -y clangd}
 
 install_node() {
   curl -fsSL https://deb.nodesource.com/setup_23.x -o /tmp/node_setup.sh
@@ -101,7 +111,9 @@ install_stow() {
 
 ensure     docker       install_docker
 ensure_apt python3-venv install_python_env
-ensure     kitty        install_kitty
+# ensure     rust      	install_rust
+# ensure     alacritty    install_alacritty
+# ensure     kitty        install_kitty
 ensure     zsh          install_zsh
 ensure_apt fd-find      install_fd
 ensure     fzf          install_fzf
